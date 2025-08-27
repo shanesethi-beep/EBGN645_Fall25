@@ -1,3 +1,5 @@
 set i /hamburgers, hotdogs, frenchfries/ ; 
 
 set j /j1*j10/ ; 
+
+set k /k1*k10/ ; 
