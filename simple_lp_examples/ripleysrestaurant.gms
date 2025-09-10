@@ -40,6 +40,11 @@ eq_objfn.. profit =e= sum(i,(r(i)-c(i)) * X(i)) ;
 
 eq_hourlimit.. hbar =g= sum(i,h(i) * X(i)) ; 
 
+scalar sw_combo /%combo%/ ; 
+
+equation eq_combo;
+eq_combo$sw_combo.. X("frenchfries") =g= X("hotdogs") ;
+
 model ripley /all/ ; 
 
 solve ripley using lp maximizing profit ;
