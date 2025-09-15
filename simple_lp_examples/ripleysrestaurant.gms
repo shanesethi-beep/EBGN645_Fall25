@@ -48,7 +48,7 @@ eq_combo$sw_combo.. X("frenchfries") =g= X("hotdogs") ;
 model ripley /all/ ; 
 
 solve ripley using lp maximizing profit ;
-
+* hello shane
 execute_unload 'ripleysdata_%combo%.gdx' ; 
 
 $exit
