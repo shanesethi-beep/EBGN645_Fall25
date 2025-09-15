@@ -49,7 +49,7 @@ model ripley /all/ ;
 
 solve ripley using lp maximizing profit ;
 
-execute_unload 'ripleysdata.gdx' ; 
+execute_unload 'ripleysdata_%combo%.gdx' ; 
 
 $exit
 
