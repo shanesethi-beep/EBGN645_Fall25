@@ -1,4 +1,4 @@
-
+OPTION PROFILE=1
 set i /hamburgers,hotdogs,frenchfries/ ; 
 
 parameter 
@@ -40,10 +40,32 @@ eq_objfn.. profit =e= sum(i,(r(i)-c(i)) * X(i)) ;
 
 eq_hourlimit.. hbar =g= sum(i,h(i) * X(i)) ; 
 
-scalar sw_combo /%combo%/ ; 
+scalar sw_combo_newname /%combo%/ ; 
 
 equation eq_combo;
-eq_combo$sw_combo.. X("frenchfries") =g= X("hotdogs") ;
+eq_combo$sw_combo_newname.. X("frenchfries") =g= X("hotdogs") ;
+
+equation eq_combo_wombo ; 
+
+eq_combo_wombo$[sw_combo_newname=2].. X("frenchfries") =g= 2 * X("hotdogs") ;
+
+set j "inputs" /Bun, Cheese, Beef, Sausage, Potato/ ; 
+table inputs_in(j,i)
+$ondelim
+$include ripley_inputs.csv
+$offdelim
+;
+
+parameter io(i,j) ; 
+
+io(i,j)$inputs_in(j,i) = inputs_in(j,i) ; 
+
+positive variables inputs(i,j) ; 
+equation inputs_track(i,j) ; 
+
+scalar sparse /%sparse%/ ; 
+
+inputs_track(i,j)$io(i,j).. inputs(i,j) =e= io(i,j) * X(i) ; 
 
 model ripley /all/ ; 
 
