@@ -52,6 +52,10 @@ eq_stocktrack(t)..
     + g *(S(t-1) - H(t-1))$(not t0(t)) 
 ;
 
+equation force_stock ;
+scalar sw_force "use the force luke" /1/ ; 
+force_stock$sw_force.. S("20") =g= 100 ; 
+
 model franzi /all/ ; 
 
 solve franzi using LP maximizing profit ; 
