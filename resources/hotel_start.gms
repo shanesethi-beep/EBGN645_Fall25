@@ -20,8 +20,7 @@ delta(t) = 1/((1+r)**t.val) ;
 
 
 POSITIVE VARIABLES
-    q_comp(t) 
-    q_mon(t)  ; 
+    q(t) ; 
 
 variables
     obj_comp  
@@ -31,7 +30,23 @@ EQUATIONS
     obj_def_comp, 
     obj_def_mon,
 
-    stock_constraint_comp, 
-    stock_constraint_mon;
+    stock_constraint ; 
 
+obj_def_comp.. obj_comp =e= sum(t,delta(t) *( pbar * q(t) - c * q(t) * q(t) / R0) ); 
 
+obj_def_mon.. obj_mon =e= sum(t,delta(t) * (a * q(t) + b * q(t) * q(t) / 2) - c * q(t) * q(t) / R0) ; 
+
+stock_constraint..  R0 =g= sum(t, q(t)) ; 
+
+model hotel /all/ ; 
+
+parameter rep ; 
+
+solve hotel using qcp maximizing obj_comp ; 
+
+rep("comp",t) = q.l(t) ; 
+
+solve hotel using qcp maximizing obj_mon ; 
+rep("monopolist",t) = q.l(t) ; 
+
+execute_unload 'hotel_%rate%.gdx' ; 

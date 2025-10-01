@@ -8,7 +8,7 @@ set t "time" /0*30/
     tlast(t) "our last year"
  ; 
  
- alias(t,tt) ; 
+ alias(t,tt,ttt) ; 
 
 set tprev(t,tt) "tt is the previous year to t" ; 
 
