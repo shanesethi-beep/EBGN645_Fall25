@@ -40,6 +40,8 @@ eq_objfn.. profit =e= sum(i,(r(i)-c(i)) * X(i)) ;
 
 eq_hourlimit.. hbar =g= sum(i,h(i) * X(i)) ; 
 
+$if not set combo $setglobal combo 0
+
 scalar sw_combo_newname /%combo%/ ; 
 
 equation eq_combo;
@@ -63,9 +65,9 @@ io(i,j)$inputs_in(j,i) = inputs_in(j,i) ;
 positive variables inputs(i,j) ; 
 equation inputs_track(i,j) ; 
 
-scalar sparse /%sparse%/ ; 
+scalar sparse /0/ ; 
 
-inputs_track(i,j)$io(i,j).. inputs(i,j) =e= io(i,j) * X(i) ; 
+inputs_track(i,j).. inputs(i,j) =e= io(i,j) * X(i) ; 
 
 model ripley /all/ ; 
 
