@@ -3,8 +3,11 @@
 * create a species type
 set s species /oak, maple/ ; 
 
+$if not set rate $setglobal rate 10
+
 * scalar are non-indexed parameters
-scalar r  discount rate / 0.1 /;
+scalar r  discount rate / %rate% /;
+r = r/100 ; 
 
 * set up parameters by species
 parameter p(s)  timber price / oak 1000, maple 2000 /,
@@ -39,23 +42,23 @@ solve faustmann using nlp maximizing Z ;
 
 * record the level (.l) value of the optimal harvest value
 * round this to an integer value
-parameter tstar(s) ; 
-tstar(s) = round(T.l(s),0) ; 
+parameter tstar ; 
+tstar("%rate%",s) = round(T.l(s),0) ; 
 
 * year set for recording purposes
 set y year /0*100/ ; 
 
 * reporting parameters to compute how many have passed since harvest in year 'y'
 * as well as the stock at any year 'y'
-parameter years_since_harvest(s,y), stock(s,y) ; 
+parameter years_since_harvest, stock ; 
 * here the years since harvest are the remainder (mod) of the year value and
 * the optimal rotation period
-years_since_harvest(s,y) = mod(y.val,tstar(s)) ; 
+years_since_harvest("%rate%",s,y) = mod(y.val,tstar("%rate%",s)) ; 
 
 * compute the stock
-stock(s,y) = init_stock(s) * (1+f(s)) ** years_since_harvest(s,y) ; 
+stock("%rate%",s,y) = init_stock(s) * (1+f(s)) ** years_since_harvest("%rate%",s,y) ; 
 
 * this will dump everything to a gdx file that you can load into the GAMS studio
 * app - you can dump data to CSV via something simple from the command prompt like:
 * 'gdxdump faustmann.gdx format=csv symb=stock > stock_jw.csv'
-execute_unload 'faustmann.gdx' ; 
+execute_unload 'faustmann_%rate%.gdx' ; 
