@@ -1,4 +1,4 @@
-* assume k is 1000
+* assume k is 3500
 
 set stock /0*3500/ ; 
 

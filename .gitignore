@@ -3,3 +3,6 @@ simple_lp_examples/ripleysdata.gsp
 simple_lp_examples/ripleysrestaurant.log
 simple_lp_examples/ripleysrestaurant.lxi
 *.gsp
+*.gdx
+*.lst
+*.dat
